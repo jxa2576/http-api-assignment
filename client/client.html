@@ -6,6 +6,78 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
+    const handleResponse = (xhr) => {
+      const responseType = xhr.getResponseHeader('content-type');
+
+      const content = document.querySelector("#content");
+
+      switch(xhr.status){
+        case 200:
+          content.innerHTML = '<b>Success!</b>';
+          break;
+        case 400:
+          content.innerHTML = '<b>Bad Request</b>';
+          break;
+        case 401:
+          content.innerHTML = '<b>Not logged in</b>';
+          break;
+        case 403:
+          content.innerHTML = '<b>Forbidden</b>';
+          break;
+        case 404:
+          content.innerHTML = '<b>Not Found</b>';
+          break;
+        case 500:
+          content.innerHTML = '<b>Internal</b>';
+          break;
+        case 501:
+          content.innerHTML = '<b>Not Implemented</b>';
+          break;
+        default:
+          content.innerHTML = '<b>Error code not implemented by client!</b>';
+          break;
+      }
+
+      if(responseType === 'application/json'){
+        const obj = JSON.parse(xhr.response);
+        content.innerHTML += `<p>${obj.message}</p>`;
+        console.dir(obj);
+      }else if(responseType === 'text/xml'){
+        const id = xhr.responseXML.querySelector('id');
+        const message = xhr.responseXML.querySelector('message');
+        content.innerHTML += `<p>${message.innerHTML}</p>`;
+        console.dir(xhr.response)
+      }
+    };
+
+    const sendAjax = (url, acceptedType) => {
+      const xhr = new XMLHttpRequest();
+
+      xhr.open('GET', url);
+      xhr.setRequestHeader("Accept", acceptedType);
+
+      xhr.onload = () => handleResponse(xhr);
+
+      xhr.send();
+    }
+
+    const getPage = () => {
+      return document.querySelector('#page').value;
+    }
+
+    const getType = () => {
+      return document.querySelector('#type').value;
+    }
+
+    const init = () => {
+      const sendButton = document.querySelector('#send');
+
+      const send = () => sendAjax(getPage(), getType());
+
+      sendButton.addEventListener('click', send);
+    };
+
+    window.onload = init;
 
   </script>
 </head>
