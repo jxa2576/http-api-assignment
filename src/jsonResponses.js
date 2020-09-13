@@ -9,7 +9,7 @@ const success = (request, response, acceptedTypes) => {
     message: 'This is a successful response',
   };
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
     responseXML = `${responseXML} </response>`;
@@ -28,7 +28,7 @@ const badRequest = (request, response, acceptedTypes, params) => {
   if (!params.valid || params.valid !== 'true') {
     responseString.message = 'Missing valid query parameter set equal to true';
 
-    if (acceptedTypes === 'text/xml') {
+    if (acceptedTypes[0] === 'text/xml') {
       let responseXML = '<response>';
       responseXML = `${responseXML} <id>${responseString.id}</id>`;
       responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -39,7 +39,7 @@ const badRequest = (request, response, acceptedTypes, params) => {
     return respond(request, response, 400, jsonString, 'application/json');
   }
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -59,7 +59,7 @@ const unauthorized = (request, response, acceptedTypes, params) => {
   if (!params.loggedIn || params.loggedIn !== 'yes') {
     responseString.message = 'Missing loggedIn query paramter set to yes';
 
-    if (acceptedTypes === 'text/xml') {
+    if (acceptedTypes[0] === 'text/xml') {
       let responseXML = '<response>';
       responseXML = `${responseXML} <id>${responseString.id}</id>`;
       responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -70,7 +70,7 @@ const unauthorized = (request, response, acceptedTypes, params) => {
     return respond(request, response, 401, jsonString, 'application/json');
   }
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -87,7 +87,7 @@ const forbidden = (request, response, acceptedTypes) => {
     message: 'You do not have access to this content',
   };
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -104,7 +104,7 @@ const internal = (request, response, acceptedTypes) => {
     message: 'Internal server error. Something went wrong.',
   };
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -121,7 +121,7 @@ const notImplemented = (request, response, acceptedTypes) => {
     message: 'A get request has not been implemented for this page.',
   };
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;
@@ -138,7 +138,7 @@ const notFound = (request, response, acceptedTypes) => {
     message: 'The page you are looking for was not found.',
   };
 
-  if (acceptedTypes === 'text/xml') {
+  if (acceptedTypes[0] === 'text/xml') {
     let responseXML = '<response>';
     responseXML = `${responseXML} <id>${responseString.id}</id>`;
     responseXML = `${responseXML} <message>${responseString.message}</message>`;

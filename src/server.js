@@ -24,7 +24,7 @@ const onRequest = (request, response) => {
   const acceptedTypes = request.headers.accept.split(',');
 
   if (urlStruct[parsedURL.pathname]) {
-    urlStruct[parsedURL.pathname](request, response, acceptedTypes[0], params);
+    urlStruct[parsedURL.pathname](request, response, acceptedTypes, params);
   } else {
     urlStruct.notFound(request, response, acceptedTypes);
   }
